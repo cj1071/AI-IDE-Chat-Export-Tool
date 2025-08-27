@@ -1,0 +1,28 @@
+services:
+  ai-ide-chat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai-ide-chat-app
+    ports:
+      - "3000:80"
+    volumes:
+      # 挂载 IDE 数据目录（根据你的操作系统调整）
+      # macOS 示例：
+      - ${CURSOR_PATH:-~/Library/Application Support/Cursor}:/data/cursor:ro
+      - ${VSCODE_PATH:-~/Library/Application Support/Code}:/data/vscode:ro
+      - ${JETBRAINS_PATH:-~/Library/Application Support/JetBrains}:/data/jetbrains:ro
+
+      # Linux 示例（取消注释并注释掉 macOS 的）：
+      # - ${CURSOR_PATH:-~/.config/Cursor}:/data/cursor:ro
+      # - ${VSCODE_PATH:-~/.config/Code}:/data/vscode:ro
+      # - ${JETBRAINS_PATH:-~/.config/JetBrains}:/data/jetbrains:ro
+
+      # Windows 示例（取消注释并注释掉其他的）：
+      # - ${CURSOR_PATH:-${APPDATA}/Cursor}:/data/cursor:ro
+      # - ${VSCODE_PATH:-${APPDATA}/Code}:/data/vscode:ro
+      # - ${JETBRAINS_PATH:-${APPDATA}/JetBrains}:/data/jetbrains:ro
+    environment:
+      - FLASK_ENV=production
+      - FLASK_DEBUG=0
+    restart: unless-stopped

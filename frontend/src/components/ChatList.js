@@ -387,7 +387,7 @@ const ChatList = ({
           <Button
             variant="outlined"
             startIcon={<RefreshIcon />}
-            onClick={fetchChats}
+            onClick={() => fetchChats(dataSource)}
             sx={{
               color: colors.highlightColor,
               borderColor: alpha(colors.highlightColor, 0.5),

@@ -1042,7 +1042,11 @@ def get_chat(session_id):
                     return jsonify(formatted_chat)
         
         logger.warning(f"Chat with ID {session_id} not found")
-        return jsonify({"error": "Chat not found"}), 404
+        return jsonify({
+            "error": "Chat not found",
+            "message": f"The chat with ID {session_id} was not found. It may have been deleted or moved.",
+            "session_id": session_id
+        }), 404
     except Exception as e:
         logger.error(f"Error in get_chat: {e}", exc_info=True)
         return jsonify({"error": str(e)}), 500
@@ -1102,7 +1106,11 @@ def export_chat(session_id):
                         )
         
         logger.warning(f"Chat with ID {session_id} not found for export")
-        return jsonify({"error": "Chat not found"}), 404
+        return jsonify({
+            "error": "Chat not found",
+            "message": f"The chat with ID {session_id} was not found. It may have been deleted or moved.",
+            "session_id": session_id
+        }), 404
     except Exception as e:
         logger.error(f"Error in export_chat: {e}", exc_info=True)
         return jsonify({"error": str(e)}), 500
